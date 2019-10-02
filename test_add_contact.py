@@ -19,7 +19,17 @@ class TestAddContact(unittest.TestCase):
         driver = self.driver
         self.open_home_page(driver)
         self.login(driver)
-        # add contact
+        self.add_contact(driver)
+        self.return_to_home_page(driver)
+        self.logout(driver)
+
+    def logout(self, driver):
+        driver.find_element_by_link_text("Logout").click()
+
+    def return_to_home_page(self, driver):
+        driver.find_element_by_link_text("home").click()
+
+    def add_contact(self, driver):
         driver.find_element_by_link_text("add new").click()
         driver.find_element_by_name("firstname").click()
         driver.find_element_by_name("firstname").clear()
@@ -80,11 +90,8 @@ class TestAddContact(unittest.TestCase):
         driver.find_element_by_name("notes").click()
         driver.find_element_by_name("notes").clear()
         driver.find_element_by_name("notes").send_keys("komment")
-        driver.find_element_by_xpath("(.//*[normalize-space(text()) and normalize-space(.)='Notes:'])[1]/following::input[1]").click()
-        # return_to_home_page
-        driver.find_element_by_link_text("home").click()
-        # logout
-        driver.find_element_by_link_text("Logout").click()
+        driver.find_element_by_xpath(
+            "(.//*[normalize-space(text()) and normalize-space(.)='Notes:'])[1]/following::input[1]").click()
 
     def login(self, driver):
         driver.find_element_by_name("user").click()
